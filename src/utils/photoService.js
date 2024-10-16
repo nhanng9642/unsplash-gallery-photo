@@ -1,8 +1,7 @@
 const API_URL = `${import.meta.env.VITE_BASE_URL}/photos`;
 
 const fetchAllPhotos = async (page = 1) => {
-    const url = `${API_URL}?page=${page}&client_id=${import.meta.env.VITE_ACCESS_KEY}`;
-    console.log(url);
+    const url = `${API_URL}?page=${page}&per_page=9&client_id=${import.meta.env.VITE_ACCESS_KEY}`;
     const response = await fetch(url);
     const photos = await response.json();
     return photos;

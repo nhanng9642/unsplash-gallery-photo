@@ -39,8 +39,9 @@ export default function Photos() {
     // Infinite scroll
     useEffect(() => {
         const handleScroll = () => {
-            if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+            if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 5) {
             setPage(prevPage => prevPage + 1);
+            }
         };
 
         window.addEventListener('scroll', handleScroll);
