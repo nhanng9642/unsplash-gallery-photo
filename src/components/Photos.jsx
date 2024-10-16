@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { fetchAllPhotos } from '../utils/photoService.js';
 import Loading from "./Loading.jsx";
+import ErrorPage from "./ErrorPage.jsx";
 
 export default function Photos() {
     const [photos, setPhotos] = useState([]);
@@ -50,10 +51,10 @@ export default function Photos() {
 
     return (
         <>
+        {photos.length === 0 && !loading && (
+            <ErrorPage />
+        )}
         <div className="grid-container">
-            {photos.length === 0 && !loading && (
-                <div className="no-photos">No photos available</div>
-            )}
             {photos.map((photo, index) => (
                 <div key={photo.id + index} className="grid-item">
                     <Link to={`${photo.id}`}>

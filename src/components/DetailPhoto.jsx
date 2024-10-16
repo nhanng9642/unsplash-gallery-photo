@@ -3,11 +3,13 @@ import { useParams, Link } from "react-router-dom";
 import { fetchPhoto } from "../utils/photoService.js";
 import Loading from "./Loading.jsx";
 import NotFound from "./NotFound.jsx";
+import ErrorPage from "./ErrorPage.jsx";
 
 export default function DetailPhoto() {
     const { id } = useParams();
     const [photo, setPhoto] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [notfound, setNotfound] = useState(false);
     const [error, setError] = useState(false);
 
     useEffect(() => {
@@ -17,12 +19,13 @@ export default function DetailPhoto() {
                 const data = await fetchPhoto(id);
                 
                 if (data.errors) {
-                    setError(true);
+                    setNotfound(true);
                     return;
                 }
                 setPhoto(data);
             } catch (error) {
                 console.error("Error fetching photo:", error);
+                setError(true);
             } finally {
                 setLoading(false);
             }
@@ -32,7 +35,8 @@ export default function DetailPhoto() {
     }, [id])
     
     return <div>
-        {error && <NotFound />}
+        {notfound && <NotFound />}
+        {error && <ErrorPage />}
         {loading && <Loading />}
         {photo && (
             <div>
